@@ -1,11 +1,14 @@
 package com.example.capstone3.OutDTO;
 
 
+import com.example.capstone3.Model.Individual;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class StoreCounterOfferDTO {
@@ -25,6 +28,8 @@ public class StoreCounterOfferDTO {
 
     private Double counterPrice;
 
-    private String status; // Pending, Negotiation, Accepted, Rejected
+    private String status;
+
+    private String individualName;
 
 }

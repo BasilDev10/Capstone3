@@ -21,11 +21,18 @@ public class StoreOffer {
     private Integer id;
 
 
-    @NotNull(message = "Error:Offered price is required")
-    @Positive(message = "Error:Price must be greater than 0")
+
     @Column(nullable = false)
     private Double counterPrice;
 
+
+    @Column(nullable = false)
+    private Boolean sameDeal;
+    @NotBlank(message = "Error:Status is required")
+    @Pattern(regexp = "^(Pending by owner|Pending by individual|Approved|Rejected)$",
+            message = "contract status must be 'Pending by owner', 'Pending by individual', 'Approved', 'Rejected'")
+    @Column(nullable = false)
+    private String status; // Pending by individual, Pending by owner, Accepted, Rejected
 
 
     @Column(nullable = false, updatable = false)
@@ -33,12 +40,6 @@ public class StoreOffer {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    @Column(nullable = false)
-    @NotBlank(message = "Error:Status is required")
-    @Pattern(regexp = "^(Pending|Negotiation|Accepted|Rejected)$",
-            message = "contract status must be 'Pending', 'Negotiation', 'Accepted', 'Rejected'")
-    private String status; // Pending, Negotiation, Accepted, Rejected
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,4 +52,7 @@ public class StoreOffer {
 
     @OneToMany(mappedBy = "storeOffer")
     private Set<StoreContract> storeContracts;
+
+    @OneToMany(mappedBy = "storeOffer")
+    private Set<Message> messages;
 }

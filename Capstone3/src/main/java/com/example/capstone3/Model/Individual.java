@@ -65,4 +65,8 @@ public class Individual {
     @OneToMany(mappedBy = "individual")
     private Set<RentalContract> rentalContracts;
 
+    // message
+    @OneToMany(mappedBy = "individual")
+    private Set<Message> messages;
+
 }

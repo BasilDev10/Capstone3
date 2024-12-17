@@ -11,6 +11,7 @@ import com.example.capstone3.OutDTO.StoreDTO;
 import com.example.capstone3.Repository.OwnerRepository;
 import com.example.capstone3.Repository.StoreRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StoreService {
 
     private final StoreRepository storeRepository;

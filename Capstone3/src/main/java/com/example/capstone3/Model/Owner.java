@@ -61,4 +61,8 @@ public class Owner {
     private Set<RentalContract> rentalContracts = new HashSet<>();
 
 
+
+    // message
+    @OneToMany(mappedBy = "owner")
+    private Set<Message> messages;
 }
