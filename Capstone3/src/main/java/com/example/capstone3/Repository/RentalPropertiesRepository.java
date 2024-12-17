@@ -1,12 +1,12 @@
 package com.example.capstone3.Repository;
 
 
-import com.example.capstone3.Model.RentalShop;
+import com.example.capstone3.Model.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RentalPropertiesRepository extends JpaRepository<RentalShop, Integer> {
+public interface RentalPropertiesRepository extends JpaRepository<Rental, Integer> {
 
-    RentalShop findRentalShopById(Integer id);
+    Rental findRentalById(Integer rentalId);
 }

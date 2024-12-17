@@ -2,15 +2,13 @@ package com.example.capstone3.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -23,34 +21,51 @@ public class RentalOffer {
     private Integer id;
 
 
-    // Rental Request Information
-    @NotEmpty(message = "Request type is required.")
-    private String requestType; // e.g., "Rent", "Inquiry", etc.
-
     @NotEmpty(message = "Status is required.")
-    private String status; // e.g., "Pending", "Approved", "Rejected"
+    @Pattern(regexp = "^(Pending|Negotiation|Accepted|Rejected)$",
+            message = "contract status must be 'Pending', 'Negotiation', 'Accepted', 'Rejected'")
+    @Column(columnDefinition = "varchar(10) default 'Pending'")
+    private String status = "Pending"; // Pending, Negotiation, Accepted, Rejected
 
-    @Size(max = 1000, message = "Additional details cannot exceed 1000 characters.")
-    private String additionalDetails; // Additional details about the request (optional)
+
+    @NotEmpty(message = "Rental type is required.")
+    @Pattern(regexp = "^(Yearly|Monthly|Quarterly|Semi-Annual)$",
+            message = "Contract status must be 'Yearly', 'Monthly', 'Quarterly','Semi-Annual' ")
+    private String rentalType;
+
 
     // Financial Details
     @PositiveOrZero(message = "Proposed rent must be zero or positive.")
-    private Double proposedRent; // Rent proposed by the user (optional)
+    private Double proposedRent; // Rent proposed by the user
 
-    @PositiveOrZero(message = "Deposit amount must be zero or positive.")
-    private Double depositAmount; // Security deposit proposed by the user (optional)
-
-    // Request Dates
-    @NotNull(message = "Request date is required.")
-    private LocalDateTime requestDate; // Date when the request was made
-
-    private LocalDateTime responseDate; // Date when the request was responded to (optional)
 
     // Timestamps
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+
+    //  Shop Details
+
+    @ManyToOne
+    @NotNull(message = "Shop is required.")
+    @JoinColumn(name = "rental_id", nullable = false)
+    @JsonIgnore
+    private Rental rental;
+
+    //contract
+
+    @OneToMany(mappedBy = "rentalOffer")
+    private Set<RentalContract> rentalContracts;
+
+    // User Details
+    @ManyToOne(fetch = FetchType.LAZY)
+
+    @NotNull(message = "individual is required.")
+    @JoinColumn(name = "individual_id", nullable = false)
+    @JsonIgnore
+    private Individual individual; // Linked to the User entity
 
 
 

@@ -58,16 +58,16 @@ public class FranchiseContracts {
     @Size(max = 50, message = "Contract Duration must not exceed 50 characters")
     private String contractDuration;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(nullable = false)
     @NotNull(message = "Investment Amount is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Investment Amount must be greater than 0")
     private Double investmentAmount;
 
-    @Column(precision = 12, scale = 2)
+    @Column(nullable = false)
     @DecimalMin(value = "0.0", inclusive = false, message = "Ongoing Admin Fees must be greater than 0")
     private Double ongoingAdminFees;
 
-    @Column(nullable = false, precision = 12, scale = 2)
+    @Column(nullable = false)
     @NotNull(message = "Agreed Fee is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Agreed Fee must be greater than 0")
     private Double agreedFee;
@@ -82,8 +82,8 @@ public class FranchiseContracts {
 
     @Column(nullable = false)
     @NotBlank(message = "Contract Status is required")
-    @Pattern(regexp = "^(Express|Active|Terminated )$",
-            message = "Contract status must be 'Express', 'Active', 'Terminated' ")
+    @Pattern(regexp = "^(Expired|Active )$",
+            message = "Contract status must be 'Express', 'Active' ")
     private String status;
 
 
@@ -104,5 +104,9 @@ public class FranchiseContracts {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_offer_id", nullable = false)
     private FranchiseOffer franchiseOffer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "franchise_id", nullable = false)
+    private Franchise franchise;
 
 }

@@ -2,15 +2,13 @@ package com.example.capstone3.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -29,6 +27,8 @@ public class Rental {
     @NotEmpty(message = "Shop name is required.")
     private String name;
 
+    @Pattern(regexp = "^(Available|Occupied)$",
+            message = "Availability status must be 'Available', 'Occupied'")
     @NotEmpty(message = "Shop status is required. ")
     private String avaiilableStatus;
 
@@ -46,23 +46,19 @@ public class Rental {
     // Rental Details
 
     @NotEmpty(message = "Rental type is required.")
-    private String rentalType; // e.g., "Full Rental", "Unit Rental"
+    @Pattern(regexp = "^(Yearly|Monthly|Quarterly|Semi-Annual)$",
+            message = "Contract status must be 'Yearly', 'Monthly', 'Quarterly','Semi-Annual' ")
+    private String rentalType;
 
+    @Positive(message = "Rental duration must be positive number")
+    private Integer rentalDuration;
 
-    //check if monthly ******
-    @PositiveOrZero(message = "Monthly rent must be zero or positive.")
-    private Double monthlyRent;
+    @PositiveOrZero(message = "Total rent must be zero or positive.")
+    private Double totalRent;
 
     @NotEmpty(message = "Lease term is required.")
     private String leaseTerm; // e.g., "1 year", "6 months"
 
-    private Boolean furnished;
-
-    private String furnishingStatus;
-
-    private String equipmentIncluded;
-
-    private Boolean kitchenInstalled;
 
     // Unit Details (Unit Specific Information)
     @NotEmpty(message = "Unit type is required.")
@@ -80,28 +76,6 @@ public class Rental {
     @Positive(message = "Unit area must be a positive number.")
     private Double unitArea; // Area of the unit (in square meters)
 
-    @PositiveOrZero(message = "Facade length must be zero or positive.")
-    private Double facadeLength; // Length of the facade of the unit
-
-    @NotEmpty(message = "Facade direction is required.")
-    private String facadeDirection; // Direction of the facade (e.g., North, South)
-
-    @Positive(message = "Number of parking spaces must be a positive number.")
-    private Integer parkingSpaces; // Number of parking spaces for the unit
-
-    @Positive(message = "Signboard area must be a positive number.")
-    private Double signboardArea; // Area for the signboard (in square meters)
-
-    @Positive(message = "Number of air conditioning units must be a positive number.")
-    private Integer airConditioningUnits; // Number of air conditioning units in the unit
-
-    @NotEmpty(message = "Air conditioning type is required.")
-    private String airConditioningType; // Type of air conditioning (e.g., Split, Window)
-
-    @NotEmpty(message = "Unit finishing status is required.")
-    private String unitFinishing; // Finishing status (e.g., "Furnished", "Unfurnished")
-
-
     // Timestamps
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -117,8 +91,14 @@ public class Rental {
     @JsonIgnore
     private Owner owner; // Linked to the Owner entity
 
+
+
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL)
     private Set<RentalOffer> rentalOffers; // Related rental requests
+
+
+    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL)
+    private Set<RentalContract> rentalContracts;
 
 
 

@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RentalContractRepository extends JpaRepository<RentalContract, Integer> {
+
+    RentalContract findRentalContractById(Integer rentalContractId);
+
+    RentalContract findRentalContractByRentalId(Integer rentalId );
 }

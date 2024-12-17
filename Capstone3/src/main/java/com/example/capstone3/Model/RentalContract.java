@@ -2,10 +2,7 @@ package com.example.capstone3.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,18 +22,15 @@ public class RentalContract {
 
     // بيانات العقد
     // General Contract Information
-    @NotEmpty(message = "Contract type is required.")
-    private String contractType;
-
     @NotEmpty(message = "Contract number is required.")
     private String contractNumber;
 
     @NotEmpty(message = "Contract status is required.")
+    @Column(nullable = false)
+    @Pattern(regexp = "^(Expired|Active)$",
+            message = "Contract status must be 'Express' or 'Active' ")
     private String contractStatus;
 
-
-    @NotEmpty(message = "Place of contract is required.")
-    private String contractPlace;
 
     @NotNull(message = "Start date is required.")
     private LocalDateTime startDate;
@@ -44,11 +38,10 @@ public class RentalContract {
     @NotNull(message = "End date is required.")
     private LocalDateTime endDate;
 
-    @NotEmpty(message = "Sealing location is required.")
-    private String sealingLocation;
-
     @NotNull(message = "Sealing date is required.")
     private LocalDateTime sealingDate;
+
+
 
     // Financial Information
 
@@ -58,28 +51,42 @@ public class RentalContract {
     @Positive(message = "Rent amount must be positive.")
     private Double rentAmount;
 
-    @PositiveOrZero(message = "Electricity bill must be zero or positive.")
-    private Double electricityBill;
+    @NotEmpty(message = "Number of electricity bill is required.")
+    private String nubmerElectricityBill;
 
-    @PositiveOrZero(message = "Water bill must be zero or positive.")
-    private Double waterBill;
+    @NotEmpty(message = "Number of Water bill is required.")
+    private String numberWaterBill;
 
-    @PositiveOrZero(message = "Security deposit must be zero or positive.")
-    private Double securityDeposit;
-
-    @PositiveOrZero(message = "Maintenance amount must be zero or positive.")
-    private Double maintenanceAmount;
-
-    private Integer billingPeriod;
-
-    private Integer numberOfRecurrings;
-
-    @PositiveOrZero(message = "Amount per bill must be zero or positive.")
-    private Double amountPerBill;
 
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+
+    //relations
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "Owner is required.")
+    @JoinColumn(name = "owner_id", nullable = false)
+    @JsonIgnore
+    private Owner owner; // المالك كطرف أول
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "individual is required.")
+    @JoinColumn(name = "individual_id", nullable = false)
+    @JsonIgnore
+    private Individual individual; // المستخدم كطرف ثاني
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "Rental offer is required.")
+    @JoinColumn(name = "rental_offer_id", nullable = false)
+    @JsonIgnore
+    private RentalOffer rentalOffer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id", nullable = false)
+    @NotNull(message = "Rental is required.")
+    private Rental rental;
 }
