@@ -1,10 +1,7 @@
 package com.example.capstone3.InDTO;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +13,12 @@ public class StoreCounterOfferDTOIn {
 
 
 
-    @NotNull(message = "Error:Offered price is required")
-    @Positive(message = "Error:Price must be greater than 0")
+    @NotNull(message = "Error:counter Price is required")
+    @Positive(message = "Error:counter Price must be greater than 0")
     private Double counterPrice;
 
+    @NotEmpty(message = "Error:message is required")
+    @Min(value = 10 , message = "Error: message length must more then 10")
     private String message;
 
 }

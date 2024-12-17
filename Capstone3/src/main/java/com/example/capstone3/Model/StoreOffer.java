@@ -23,7 +23,7 @@ public class StoreOffer {
 
 
     @Column(nullable = false)
-    private Double counterPrice;
+    private Double offerPrice;
 
 
     @Column(nullable = false)
