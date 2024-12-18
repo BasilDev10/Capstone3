@@ -3,10 +3,13 @@ package com.example.capstone3.Service;
 import com.example.capstone3.ApiResponse.ApiException;
 import com.example.capstone3.Model.Franchise;
 import com.example.capstone3.Model.FranchiseContracts;
+import com.example.capstone3.OutDTO.FranchiseDTO;
 import com.example.capstone3.Repository.FranchiseContractRepository;
 import com.example.capstone3.Repository.FranchiseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -40,8 +43,6 @@ public class  FranchiseService {
 
     }
 
-
-
     public void delete(Integer id){
         FranchiseContracts franchiseContracts = franchiseContractRepository.findFranchiseContractsByFranchiseIdAndStatus(id, "Active");
 
@@ -53,5 +54,36 @@ public class  FranchiseService {
 
         franchiseRepository.delete(franchise);
     }
+
+
+    public List<FranchiseDTO> franchises(){
+        List<FranchiseDTO> franchiseDTOS = franchiseRepository.findAll().stream().map(this::mapToDto).toList();
+
+        return franchiseDTOS;
+    }
+
+
+
+    public FranchiseDTO mapToDto(Franchise franchise) {
+        if (franchise == null) {
+            return null;
+        }
+        FranchiseDTO dto = new FranchiseDTO();
+        dto.setBrandName(franchise.getBrandName());
+        dto.setLicenseNumber(franchise.getLicenseNumber());
+        dto.setContractDuration(franchise.getContractDuration());
+        dto.setInvestmentAmount(franchise.getInvestmentAmount());
+        dto.setFranchiseFee(franchise.getFranchiseFee());
+        dto.setNumberOfBranches(franchise.getNumberOfBranches());
+        dto.setCountryOfOrigin(franchise.getCountryOfOrigin());
+        dto.setFranchiseType(franchise.getFranchiseType());
+        dto.setSector(franchise.getSector());
+        dto.setOngoingAdminFees(franchise.getOngoingAdminFees());
+        dto.setDescription(franchise.getDescription());
+        dto.setSupportDetails(franchise.getSupportDetails());
+        return dto;
+    }
+
+
 
 }

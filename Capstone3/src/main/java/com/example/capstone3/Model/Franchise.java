@@ -1,10 +1,7 @@
 package com.example.capstone3.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ import java.util.Set;
 @Setter
 @Getter
 
+// Done by Salem
 public class Franchise {
 
     @Id
@@ -35,10 +33,11 @@ public class Franchise {
     @Size(max = 50, message = "License Number must not exceed 50 characters")
     private String licenseNumber;
 
-    @Column(length = 50)
-    @NotBlank(message = "Contract Duration is required")
-    @Size(max = 50, message = "Contract Duration must not exceed 50 characters")
-    private String contractDuration;
+    @Column(nullable = false)
+    @NotNull(message = "Contract Duration is required")
+    @Min(value = 1, message = "Contract Duration must be at least 1 year")
+    @Max(value = 100, message = "Contract Duration must not exceed 100 years")
+    private Integer contractDuration;
 
     @Column(nullable = false)
     @NotNull(message = "Investment Amount is required")

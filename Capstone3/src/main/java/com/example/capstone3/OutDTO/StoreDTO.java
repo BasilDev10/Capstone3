@@ -14,14 +14,19 @@ import lombok.Setter;
 public class StoreDTO {
 
 
+    private Integer id;
+
     private String StoreName;
 
 
     private String location;
 
 
-    private Double area;
+    private Boolean withEquipment;
 
+    private String storeType;
+
+    private Integer numberOfBranches;
 
     private Double originalPrice;
 
@@ -30,6 +35,8 @@ public class StoreDTO {
 
 
     private String ownerName;
+
+    private String status;
 
 
 }

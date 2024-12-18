@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,7 +26,7 @@ public class RentalContract {
     @NotEmpty(message = "Contract number is required.")
     private String contractNumber;
 
-    @NotEmpty(message = "Contract status is required.")
+    //@NotEmpty(message = "Contract status is required.")
     @Column(nullable = false)
     @Pattern(regexp = "^(Expired|Active)$",
             message = "Contract status must be 'Express' or 'Active' ")
@@ -33,13 +34,13 @@ public class RentalContract {
 
 
     @NotNull(message = "Start date is required.")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @NotNull(message = "End date is required.")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @NotNull(message = "Sealing date is required.")
-    private LocalDateTime sealingDate;
+    private LocalDate sealingDate;
 
 
 
@@ -48,8 +49,6 @@ public class RentalContract {
     @Positive(message = "Total contract amount must be positive.")
     private Double totalContractAmount;
 
-    @Positive(message = "Rent amount must be positive.")
-    private Double rentAmount;
 
     @NotEmpty(message = "Number of electricity bill is required.")
     private String nubmerElectricityBill;
@@ -60,8 +59,6 @@ public class RentalContract {
 
     @Column(updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    private LocalDateTime updatedAt = LocalDateTime.now();
 
 
     //relations

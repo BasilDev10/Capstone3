@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
@@ -41,23 +42,20 @@ public class Rental {
     @Positive(message = "Area must be a positive number.")
     private Double area;
 
-    //private String facilities;
 
     // Rental Details
 
-    @NotEmpty(message = "Rental type is required.")
-    @Pattern(regexp = "^(Yearly|Monthly|Quarterly|Semi-Annual)$",
-            message = "Contract status must be 'Yearly', 'Monthly', 'Quarterly','Semi-Annual' ")
+    @Column(columnDefinition = "varchar(8) default 'Yearly'")
     private String rentalType;
 
-    @Positive(message = "Rental duration must be positive number")
-    private Integer rentalDuration;
+//    @Positive(message = "Rental duration must be positive number")
+//    private Integer rentalDuration;
 
-    @PositiveOrZero(message = "Total rent must be zero or positive.")
-    private Double totalRent;
+    @PositiveOrZero(message = "Annul rent must be zero or positive.")
+    private Double annulRent;
 
-    @NotEmpty(message = "Lease term is required.")
-    private String leaseTerm; // e.g., "1 year", "6 months"
+//    @NotEmpty(message = "Lease term is required.")
+//    private String leaseTerm; // e.g., "1 year", "6 months"
 
 
     // Unit Details (Unit Specific Information)
@@ -78,9 +76,10 @@ public class Rental {
 
     // Timestamps
     @Column(updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDate createdAt ;
 
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDate updatedAt ;
+
 
 
 

@@ -18,7 +18,7 @@ public class StoreCounterOfferDTOIn {
     private Double counterPrice;
 
     @NotEmpty(message = "Error:message is required")
-    @Min(value = 10 , message = "Error: message length must more then 10")
+    @Size( min = 10, message = "Error: message length must more then 10")
     private String message;
 
 }

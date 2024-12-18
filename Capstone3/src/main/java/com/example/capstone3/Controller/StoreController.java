@@ -14,6 +14,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/deal-hub/store")
+
+//Done by Basil
 public class StoreController {
 
     private final StoreService storeService;
@@ -34,12 +36,24 @@ public class StoreController {
         return ResponseEntity.ok(new ApiResponse("Store added successfully"));
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ApiResponse> updateStore(@PathVariable Integer id, @RequestBody @Valid StoreDTOIn storeDTOIn) {
         storeService.updateStore(id,storeDTOIn);
         return ResponseEntity.ok(new ApiResponse("Store updated successfully"));
     }
 
+    // active the store to allow the individual make offer on store and prevent the owner make changes to store -- by basil
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<ApiResponse> activateStore(@PathVariable Integer id) {
+        storeService.activeStore(id);
+        return ResponseEntity.ok(new ApiResponse("Store activated successfully"));
+    }
+    // inactive the store reject all active offers and prevent the individual to make offer and allow the owner make changes to store -- by basil
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<ApiResponse> deactivateStore(@PathVariable Integer id) {
+        storeService.inactiveStore(id);
+        return ResponseEntity.ok(new ApiResponse("Store deactivated successfully"));
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse> deleteStore(@PathVariable Integer id){
         storeService.deleteStore(id);

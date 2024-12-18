@@ -9,6 +9,8 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
+
+// Done by Salem
 public class FranchiseContractDTO {
 
 
@@ -37,5 +39,7 @@ public class FranchiseContractDTO {
     private LocalDate contractDate;
 
     private String status;
+
+    private String message;
 
 }

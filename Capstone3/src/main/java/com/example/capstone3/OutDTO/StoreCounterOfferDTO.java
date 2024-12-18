@@ -2,6 +2,8 @@ package com.example.capstone3.OutDTO;
 
 
 import com.example.capstone3.Model.Individual;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +20,11 @@ public class StoreCounterOfferDTO {
     private String location;
 
 
-    private Double area;
+    private Boolean withEquipment;
 
+    private String storeType;
+
+    private Integer numberOfBranches;
 
     private Double originalPrice;
 

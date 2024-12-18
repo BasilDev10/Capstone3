@@ -1,7 +1,9 @@
 package com.example.capstone3.Controller;
 
+import com.example.capstone3.InDTO.FranchiseOfferIn;
 import com.example.capstone3.Model.Individual;
 import com.example.capstone3.Model.Owner;
+import com.example.capstone3.Service.FranchiseOfferService;
 import com.example.capstone3.Service.IndividualService;
 import com.example.capstone3.Service.OwnerService;
 import jakarta.validation.Valid;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class OwnerController {
 
     private final OwnerService OwnerService;
+    private final OwnerService ownerService;
+    private final FranchiseOfferService franchiseOfferService;
 
     @PostMapping("/add")
     public ResponseEntity addIndividual(@RequestBody @Valid Owner owner) {
@@ -30,6 +34,15 @@ public class OwnerController {
         OwnerService.update(id,owner);
         return ResponseEntity.status(200).body("Individual updated successfully");
     }
+
+
+
+
+
+
+
+
+
 
 
 

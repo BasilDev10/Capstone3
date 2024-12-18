@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -22,31 +23,35 @@ public class RentalOffer {
 
 
     @NotEmpty(message = "Status is required.")
-    @Pattern(regexp = "^(Pending|Negotiation|Accepted|Rejected)$",
-            message = "contract status must be 'Pending', 'Negotiation', 'Accepted', 'Rejected'")
-    @Column(columnDefinition = "varchar(10) default 'Pending'")
     private String status = "Pending"; // Pending, Negotiation, Accepted, Rejected
 
 
-    @NotEmpty(message = "Rental type is required.")
-    @Pattern(regexp = "^(Yearly|Monthly|Quarterly|Semi-Annual)$",
-            message = "Contract status must be 'Yearly', 'Monthly', 'Quarterly','Semi-Annual' ")
+    private Double rentalAmount;
+    // Financial Details
+
+    @Column(columnDefinition = "varchar(8) default 'Yearly'")
     private String rentalType;
 
-
-    // Financial Details
     @PositiveOrZero(message = "Proposed rent must be zero or positive.")
-    private Double proposedRent; // Rent proposed by the user
+    private Double individualProposedRent; // Rent proposed by the user
+
+
+    @PositiveOrZero(message = "Proposed rent must be zero or positive.")
+    private Double ownerProposedRent;
+
+    private Boolean individualAcceptedOwnerProposed;
+    private Boolean ownerAcceptedIndividualProposal;
+
 
 
     // Timestamps
     @Column(updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime negotiatedAt ;
 
 
-    //  Shop Details
+    //  Rental Shop Details
 
     @ManyToOne
     @NotNull(message = "Shop is required.")
@@ -61,7 +66,6 @@ public class RentalOffer {
 
     // User Details
     @ManyToOne(fetch = FetchType.LAZY)
-
     @NotNull(message = "individual is required.")
     @JoinColumn(name = "individual_id", nullable = false)
     @JsonIgnore

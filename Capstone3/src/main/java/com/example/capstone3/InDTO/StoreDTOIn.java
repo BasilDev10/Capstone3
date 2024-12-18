@@ -23,19 +23,23 @@ public class StoreDTOIn {
     @Size(min = 3, max = 100 ,message = "Error: Store location length must between 3 to 100")
     private String location;
 
-    @NotNull(message = "Error:Area is required")
-    @Min(value = 20 , message = "Error:Area must be greater than 20")
-    private Double area;
+    @NotNull(message = "Error:with Equipment is required")
+    private Boolean withEquipment;
+
+    @NotNull(message = "Error:store Type is required")
+    private String storeType;
+
+    @NotNull(message = "Error:number Of Branches is required")
+    @Min(value = 1 , message = "Error:Area must be greater than 1")
+    private Integer numberOfBranches;
 
     @NotNull(message = "Error:Price is required")
     @Positive(message = "Error:Price must be greater than 0")
-
     private Double originalPrice;
 
     @NotEmpty(message = "Error:description is required")
     @Size(min = 3, max = 250 ,message = "Error: description length must between 3 to 300")
     private String description;
 
-    @NotNull(message = "Error:owner_id is required")
     private Integer owner_id;
 }

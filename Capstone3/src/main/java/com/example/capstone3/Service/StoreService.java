@@ -24,6 +24,7 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final OwnerRepository ownerRepository;
+    private final StoreOfferService storeOfferService;
 
 
     public List<StoreDTO> getAllStores(){
@@ -43,7 +44,9 @@ public class StoreService {
 
         store.setStoreName(storeDTOIn.getStoreName());
         store.setLocation(storeDTOIn.getLocation());
-        store.setArea(storeDTOIn.getArea());
+        store.setWithEquipment(storeDTOIn.getWithEquipment());
+        store.setStoreType(storeDTOIn.getStoreType());
+        store.setNumberOfBranches(storeDTOIn.getNumberOfBranches());
         store.setOriginalPrice(storeDTOIn.getOriginalPrice());
         store.setDescription(storeDTOIn.getDescription());
         store.setOwner(owner);
@@ -56,11 +59,15 @@ public class StoreService {
         Store store = storeRepository.findStoreById(id);
         if (store == null) throw new ApiException("Error: store not found");
         if (!store.getStoreContracts().isEmpty()) throw new ApiException("Error : store is sold you can't update it" );
+        if (store.getStatus().equalsIgnoreCase("Active")) throw new ApiException("Error : store is Active you can't update it, if you want update make it Inactive to make changes" );
         store.setStoreName(storeDTOIn.getStoreName());
         store.setLocation(storeDTOIn.getLocation());
-        store.setArea(storeDTOIn.getArea());
+        store.setWithEquipment(storeDTOIn.getWithEquipment());
+        store.setStoreType(storeDTOIn.getStoreType());
+        store.setNumberOfBranches(storeDTOIn.getNumberOfBranches());
         store.setOriginalPrice(storeDTOIn.getOriginalPrice());
         store.setDescription(storeDTOIn.getDescription());
+        store.setUpdatedAt(java.time.LocalDateTime.now());
         storeRepository.save(store);
     }
 
@@ -70,6 +77,7 @@ public class StoreService {
         if (store == null) throw new ApiException("Error: store not found");
         if (!store.getStoreContracts().isEmpty()) throw new ApiException("Error : store is sold you can't update it" );
 
+        // checking there is offer active before male the delete -- by basil
         Set<StoreOffer> storeOffers = store.getStoreOffers()
                 .stream()
                 .filter(storeOffer -> !storeOffer.getStatus().equalsIgnoreCase("Rejected"))
@@ -79,10 +87,29 @@ public class StoreService {
         storeRepository.deleteById(id);
     }
 
+
+    // active the store to allow the individual make offer on store and prevent the owner make changes to store -- by basil
+    public void activeStore(Integer id){
+        Store store = storeRepository.findStoreById(id);
+        if (store == null) throw new ApiException("Error: store not found");
+        if (!store.getStoreContracts().isEmpty()) throw new ApiException("Error : store is sold you can't update status" );
+        store.setStatus("Active");
+        storeRepository.save(store);
+    }
+    // inactive the store reject all active offers and prevent the individual to make offer and allow the owner make changes to store -- by basil
+    public void inactiveStore(Integer id){
+        Store store = storeRepository.findStoreById(id);
+        if (store == null) throw new ApiException("Error: store not found");
+        if (!store.getStoreContracts().isEmpty()) throw new ApiException("Error : store is sold you can't update status" );
+
+        store.setStatus("Inactive");
+        storeRepository.save(store);
+        storeOfferService.rejectAllOffers(store.getStoreOffers());
+    }
     public StoreDTO convertStoreDto(Store store){
 
         Owner owner = store.getOwner();
 
-        return new StoreDTO(store.getStoreName(),store.getLocation(),store.getArea(),store.getOriginalPrice(),store.getDescription(),owner.getFullName());
+        return new StoreDTO( store.getId(),store.getStoreName(),store.getLocation(),store.getWithEquipment(),store.getStoreType(),store.getNumberOfBranches(),store.getOriginalPrice(),store.getDescription(),owner.getFullName(),store.getStatus());
     }
 }

@@ -35,4 +35,8 @@ public class Message {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_offer_id")
     private StoreOffer storeOffer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "franchise_offer_id")
+    private FranchiseOffer franchiseOffer;
 }

@@ -3,16 +3,19 @@ package com.example.capstone3.OutDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+// Done by Salem
 public class FranchiseDTO {
 
     private String brandName;
 
     private String licenseNumber;
 
-    private String contractDuration;
+    private Integer contractDuration;
 
     private Double investmentAmount;
 

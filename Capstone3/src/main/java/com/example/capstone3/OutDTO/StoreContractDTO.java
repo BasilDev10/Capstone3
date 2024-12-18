@@ -19,7 +19,11 @@ public class StoreContractDTO {
     private String location;
 
 
-    private Double area;
+    private Boolean withEquipment;
+
+    private String storeType;
+
+    private Integer numberOfBranches;
 
 
     private String description;
@@ -28,7 +32,6 @@ public class StoreContractDTO {
     private Double agreedPrice;
 
 
-    private String contractDetails;
 
 
     private LocalDate contractDate;
@@ -39,5 +42,4 @@ public class StoreContractDTO {
 
     private String ownerName;
 
-    private LocalDateTime updatedAt;
 }

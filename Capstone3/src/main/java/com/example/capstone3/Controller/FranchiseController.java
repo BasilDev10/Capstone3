@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/deal-hub/franchise")
+// Done by Salem
 public class FranchiseController {
 
     private final FranchiseService franchiseService;
@@ -27,5 +28,11 @@ public class FranchiseController {
     public ResponseEntity updateFranchise(@PathVariable Integer id, @RequestBody @Valid Franchise franchise) {
         franchiseService.update(id,franchise);
         return ResponseEntity.status(200).body(new ApiResponse("Franchise updated successfully"));
+    }
+
+    @GetMapping("/get-franchise")
+    public ResponseEntity getFranchise(){
+
+        return ResponseEntity.status(200).body(franchiseService.franchises());
     }
 }

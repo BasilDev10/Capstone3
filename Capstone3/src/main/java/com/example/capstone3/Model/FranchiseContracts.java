@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
+// Done by Salem
 public class FranchiseContracts {
 
     @Id
@@ -28,10 +29,6 @@ public class FranchiseContracts {
     @Size(max = 255, message = "Franchisee Name must not exceed 255 characters")
     private String franchiseeName;
 
-    @Column(nullable = false, length = 15)
-    @NotBlank(message = "Franchisee Phone is required")
-    @Size(max = 15, message = "Franchisee Phone must not exceed 15 characters")
-    private String franchiseePhone;
 
     @Column(nullable = false, length = 255)
     @NotBlank(message = "Franchisor Name is required")
@@ -53,10 +50,11 @@ public class FranchiseContracts {
     @Size(max = 15, message = "Second Party Phone must not exceed 15 characters")
     private String secondPartyPhone;
 
-    @Column(nullable = false, length = 50)
-    @NotBlank(message = "Contract Duration is required")
-    @Size(max = 50, message = "Contract Duration must not exceed 50 characters")
-    private String contractDuration;
+    @Column(nullable = false)
+    @NotNull(message = "Contract Duration is required")
+    @Min(value = 1, message = "Contract Duration must be at least 1 year")
+    @Max(value = 100, message = "Contract Duration must not exceed 100 years")
+    private Integer contractDuration;
 
     @Column(nullable = false)
     @NotNull(message = "Investment Amount is required")
@@ -72,8 +70,6 @@ public class FranchiseContracts {
     @DecimalMin(value = "0.0", inclusive = false, message = "Agreed Fee must be greater than 0")
     private Double agreedFee;
 
-    @Column(columnDefinition = "TEXT")
-    private String contractDetails;
 
     @Column(nullable = false)
     @NotNull(message = "Contract Date is required")
@@ -82,8 +78,8 @@ public class FranchiseContracts {
 
     @Column(nullable = false)
     @NotBlank(message = "Contract Status is required")
-    @Pattern(regexp = "^(Expired|Active )$",
-            message = "Contract status must be 'Express', 'Active' ")
+    @Pattern(regexp = "^(Expired|Active)$",
+            message = "Contract status must be 'Expired', 'Active' ")
     private String status;
 
 
@@ -108,5 +104,23 @@ public class FranchiseContracts {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id", nullable = false)
     private Franchise franchise;
+
+
+    public void updateStatus() {
+        if (isExpired()) {
+            this.status = "Expired";
+        } else {
+            this.status = "Active";
+        }
+    }
+
+    public boolean isExpired() {
+        LocalDate expirationDate = this.contractDate.plusYears(this.contractDuration);
+        return LocalDate.now().isAfter(expirationDate);
+    }
+
+    public LocalDate getExpirationDate() {
+        return this.contractDate.plusYears(this.contractDuration);
+    }
 
 }

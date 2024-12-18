@@ -10,11 +10,14 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+// Done by Salem
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+
 public class FranchiseOffer {
 
     @Id
@@ -26,14 +29,13 @@ public class FranchiseOffer {
     @DecimalMin(value = "0.0", inclusive = false, message = "Offered Fee must be greater than 0")
     private Double offeredFee;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @DecimalMin(value = "0.0", inclusive = false, message = "Counter Offer Fee must be greater than 0")
     private Double counterOfferFee;
 
-    @Column(length = 50)
-    @NotBlank(message = "Contract Duration is required")
-    @Size(max = 50, message = "Contract Duration must not exceed 50 characters")
-    private String contractDuration;
+    @Column(nullable = false)
+
+    private Integer contractDuration;
 
     @Column(nullable = false)
     @NotNull(message = "Investment Amount is required")
@@ -47,21 +49,21 @@ public class FranchiseOffer {
     private Double ongoingAdminFees;
 
     // counter
-    @Column(length = 50)
-    @NotBlank(message = "Contract Duration is required")
-    @Size(max = 50, message = "Contract Duration must not exceed 50 characters")
-    private String CounterContractDuration;
+
+    @Column(nullable = false, columnDefinition = "integer default 0")
+    private Integer counterContractDuration = 0;
 
 
     @Column(nullable = false)
-    @NotNull(message = "Investment Amount is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Investment Amount must be greater than 0")
-    private Double CounterInvestmentAmount;
+    private Double counterInvestmentAmount = 0.00;
 
 
     @Column(nullable = false)
-    @DecimalMin(value = "0.0", inclusive = false, message = "Ongoing Admin Fees must be greater than 0")
-    private Double CounterongoingAdminFees;
+    private Double counterOngoingAdminFees = 0.0;
+
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private boolean sameDeal= true;
+
 
     // ------------------------------
 
