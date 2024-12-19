@@ -1,3 +1,26 @@
+# Deal Hub API Documentation
+
+The Deal Hub API provides endpoints for managing stores, offers, and contracts between store owners and individuals. This documentation covers all available endpoints, their purpose, and usage.
+
+## Overview
+The API consists of the following models:
+- **Store:** Represents a store in the system, including its details and status.
+- **StoreOffer:** Manages offers made between individuals and stores.
+- **StoreContract:** Tracks contracts between individuals and store owners.
+
+### Total Endpoints
+- **StoreController:** 2 endpoints
+- **StoreOfferController:** 12 endpoints
+- **StoreContractController:** 2 endpoints  
+**Total:** **16 endpoints**
+
+This documentation is organized into the following sections:
+1. **Store API Endpoints**
+2. **Store Offer API Endpoints**
+3. **Store Contract API Endpoints**
+
+Each section includes a detailed explanation of the endpoints, their request parameters, and expected responses.
+
 # Store Offer API Documentation
 
 The `StoreOfferController` provides endpoints for managing offers between store owners and individuals in the Deal Hub application. Below is a detailed explanation of the available endpoints:
