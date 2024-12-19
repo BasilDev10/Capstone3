@@ -21,11 +21,34 @@ This documentation is organized into the following sections:
 
 Each section includes a detailed explanation of the endpoints, their request parameters, and expected responses.
 
+
+# Store API Documentation
+
+The `StoreController` provides endpoints for managing stores in the Deal Hub application. Below is a detailed explanation of the available endpoints:
+
+
+---
+
+## 1. Activate Store
+**URL:** `PUT /api/v1/deal-hub/store/activate/{id}`  
+**Description:** Activates a store, allowing individuals to make offers. Prevents the owner from making changes to the store.  
+**Path Parameters:**
+- `id` (Integer): The ID of the store to be activated.  
+
+---
+
+## 2. Deactivate Store
+**URL:** `PUT /api/v1/deal-hub/store/deactivate/{id}`  
+**Description:** Deactivates a store, rejecting all active offers and preventing individuals from making offers. Allows the owner to make changes to the store.  
+**Path Parameters:**
+- `id` (Integer): The ID of the store to be deactivated.  
+
+
 # Store Offer API Documentation
 
 The `StoreOfferController` provides endpoints for managing offers between store owners and individuals in the Deal Hub application. Below is a detailed explanation of the available endpoints:
 
-## 1. Get Offers for a Specific Store
+## 3. Get Offers for a Specific Store
 **URL:** `GET /api/v1/deal-hub/store-offer/get-by-store/{storeId}`  
 **Description:** Retrieves all offers associated with a specific store.  
 **Path Parameters:**
@@ -33,7 +56,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 2. Get Offers by Store and Individual
+## 4. Get Offers by Store and Individual
 **URL:** `GET /api/v1/deal-hub/store-offer/get-by-store-and-individual/{storeId}/{individualId}`  
 **Description:** Fetches all offers made by a specific individual for a specific store.  
 **Path Parameters:**
@@ -42,7 +65,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 3. Get Pending Offers by Individual
+## 5. Get Pending Offers by Individual
 **URL:** `GET /api/v1/deal-hub/store-offer/pending-by-individual/{individualId}`  
 **Description:** Retrieves all pending offers for a specific individual.  
 **Path Parameters:**
@@ -50,7 +73,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 4. Get Pending Offers by Owner
+## 6. Get Pending Offers by Owner
 **URL:** `GET /api/v1/deal-hub/store-offer/pending-by-owner/{ownerId}`  
 **Description:** Retrieves all pending offers for a specific store owner.  
 **Path Parameters:**
@@ -58,7 +81,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 5. Make Offer with Same Deal
+## 7. Make Offer with Same Deal
 **URL:** `POST /api/v1/deal-hub/store-offer/add-same-deal/{storeId}/{individualId}`  
 **Description:** Creates an offer with the same deal as store deal.  
 **Path Parameters:**
@@ -67,7 +90,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 6. Make Counter Offer
+## 8. Make Counter Offer
 **URL:** `POST /api/v1/deal-hub/store-offer/add-counter-deal/{storeId}/{individualId}`  
 **Description:** Creates a counteroffer for an store deal.  
 **Path Parameters:**
@@ -77,7 +100,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 7. Individual Counter Offer
+## 9. Individual Counter Offer
 **URL:** `PUT /api/v1/deal-hub/store-offer/counter-by-individual/{offerId}/{individualId}`  
 **Description:** Updates an offer with a counter from an individual.  
 **Path Parameters:**
@@ -87,7 +110,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 8. Individual Approve Offer
+## 10. Individual Approve Offer
 **URL:** `PUT /api/v1/deal-hub/store-offer/approve-by-individual/{offerId}/{individualId}`  
 **Description:** Approves an offer as an individual.  
 **Path Parameters:**
@@ -96,7 +119,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 9. Individual Reject Offer
+## 11. Individual Reject Offer
 **URL:** `PUT /api/v1/deal-hub/store-offer/reject-by-individual/{offerId}/{individualId}`  
 **Description:** Rejects an offer as an individual.  
 **Path Parameters:**
@@ -105,7 +128,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 10. Owner Counter Offer
+## 12. Owner Counter Offer
 **URL:** `PUT /api/v1/deal-hub/store-offer/counter-by-owner/{offerId}/{ownerId}`  
 **Description:** Updates an offer with a counter from a store owner.  
 **Path Parameters:**
@@ -115,7 +138,7 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 11. Owner Approve Offer
+## 13. Owner Approve Offer
 **URL:** `PUT /api/v1/deal-hub/store-offer/approve-by-owner/{offerId}/{ownerId}`  
 **Description:** Approves an offer as a store owner.  
 **Path Parameters:**
@@ -124,34 +147,13 @@ The `StoreOfferController` provides endpoints for managing offers between store 
 
 ---
 
-## 12. Owner Reject Offer
+## 14. Owner Reject Offer
 **URL:** `PUT /api/v1/deal-hub/store-offer/reject-by-owner/{offerId}/{ownerId}`  
 **Description:** Rejects an offer as a store owner.  
 **Path Parameters:**
 - `offerId` (Integer): The ID of the offer.
 - `ownerId` (Integer): The ID of the owner.  
 
-
-# Store API Documentation
-
-The `StoreController` provides endpoints for managing stores in the Deal Hub application. Below is a detailed explanation of the available endpoints:
-
-
----
-
-## 13. Activate Store
-**URL:** `PUT /api/v1/deal-hub/store/activate/{id}`  
-**Description:** Activates a store, allowing individuals to make offers. Prevents the owner from making changes to the store.  
-**Path Parameters:**
-- `id` (Integer): The ID of the store to be activated.  
-
----
-
-## 14. Deactivate Store
-**URL:** `PUT /api/v1/deal-hub/store/deactivate/{id}`  
-**Description:** Deactivates a store, rejecting all active offers and preventing individuals from making offers. Allows the owner to make changes to the store.  
-**Path Parameters:**
-- `id` (Integer): The ID of the store to be deactivated.  
 
 
 
